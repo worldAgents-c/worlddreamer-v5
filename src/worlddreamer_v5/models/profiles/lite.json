@@ -1,0 +1,183 @@
+{
+  "model_name": "worlddreamer-v5",
+  "variant": "lite",
+  "vlm": {
+    "architectures": [
+      "Qwen3VLForConditionalGeneration"
+    ],
+    "image_token_id": 151655,
+    "model_type": "qwen3_vl",
+    "text_config": {
+      "attention_bias": false,
+      "attention_dropout": 0.0,
+      "bos_token_id": 151643,
+      "dtype": "bfloat16",
+      "eos_token_id": 151645,
+      "head_dim": 128,
+      "hidden_act": "silu",
+      "hidden_size": 2560,
+      "initializer_range": 0.02,
+      "intermediate_size": 9728,
+      "max_position_embeddings": 262144,
+      "model_type": "qwen3_vl_text",
+      "num_attention_heads": 32,
+      "num_hidden_layers": 36,
+      "num_key_value_heads": 8,
+      "rms_norm_eps": 1e-06,
+      "rope_scaling": {
+        "mrope_interleaved": true,
+        "mrope_section": [
+          24,
+          20,
+          20
+        ],
+        "rope_type": "default"
+      },
+      "rope_theta": 5000000,
+      "tie_word_embeddings": true,
+      "use_cache": true,
+      "vocab_size": 151936
+    },
+    "tie_word_embeddings": true,
+    "video_token_id": 151656,
+    "vision_config": {
+      "deepstack_visual_indexes": [
+        5,
+        11,
+        17
+      ],
+      "depth": 24,
+      "hidden_act": "gelu_pytorch_tanh",
+      "hidden_size": 1024,
+      "in_channels": 3,
+      "initializer_range": 0.02,
+      "intermediate_size": 4096,
+      "model_type": "qwen3_vl",
+      "num_heads": 16,
+      "num_position_embeddings": 2304,
+      "out_hidden_size": 2560,
+      "patch_size": 16,
+      "spatial_merge_size": 2,
+      "temporal_patch_size": 2
+    },
+    "vision_end_token_id": 151653,
+    "vision_start_token_id": 151652
+  },
+  "video": {
+    "attention_head_dim": 128,
+    "image_embed_dim": 1152,
+    "in_channels": 33,
+    "mlp_ratio": 4.0,
+    "norm_type": "layer_norm",
+    "num_attention_heads": 12,
+    "num_layers": 12,
+    "num_single_layers": 24,
+    "out_channels": 16,
+    "patch_size": 2,
+    "patch_size_t": 1,
+    "qk_norm": "rms_norm",
+    "rope_axes_dim": [
+      16,
+      56,
+      56
+    ],
+    "rope_theta": 10000.0,
+    "text_embed_dim": 2560,
+    "num_generation_layers": 8
+  },
+  "vae": {
+    "attn_scales": [],
+    "base_dim": 96,
+    "decoder_base_dim": null,
+    "dim_mult": [
+      1,
+      2,
+      4,
+      4
+    ],
+    "dropout": 0.0,
+    "in_channels": 3,
+    "is_residual": false,
+    "latents_mean": [
+      -0.7571,
+      -0.7089,
+      -0.9113,
+      0.1075,
+      -0.1745,
+      0.9653,
+      -0.1517,
+      1.5508,
+      0.4134,
+      -0.0715,
+      0.5517,
+      -0.3632,
+      -0.1922,
+      -0.9497,
+      0.2503,
+      -0.2921
+    ],
+    "latents_std": [
+      2.8184,
+      1.4541,
+      2.3275,
+      2.6558,
+      1.2196,
+      1.7708,
+      2.6052,
+      2.0743,
+      3.2687,
+      2.1526,
+      2.8652,
+      1.5579,
+      1.6382,
+      1.1253,
+      2.8251,
+      1.916
+    ],
+    "num_res_blocks": 2,
+    "out_channels": 3,
+    "patch_size": null,
+    "scale_factor_spatial": 8,
+    "scale_factor_temporal": 4,
+    "temperal_downsample": [
+      false,
+      true,
+      true
+    ],
+    "z_dim": 16
+  },
+  "action": {
+    "layers": 36,
+    "hidden_size": 1024,
+    "head_dim": 128,
+    "kv_heads": 8,
+    "horizon": 30,
+    "dimensions": 18,
+    "state_steps": 1,
+    "state_dimensions": 20,
+    "projector_layers": 2,
+    "time_modulations": 6,
+    "flow_steps": 5,
+    "training_repeat": 4
+  },
+  "geometry": {
+    "video_observed_latents": 3,
+    "field_size": 256,
+    "field_resolution": 16,
+    "field_samples_per_ray": 8,
+    "max_agents": 4,
+    "render_target_size": 256,
+    "image_size": [
+      240,
+      320
+    ],
+    "patch_grid": [
+      15,
+      20
+    ]
+  },
+  "interaction": {
+    "num_heads": 8,
+    "pose_dim": 10
+  }
+}

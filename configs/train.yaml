@@ -1,0 +1,74 @@
+# Copyright (C) 2026 World Agents Corporation.
+model:
+  model_name: worlddreamer-v5
+  variant: lite
+  state_dim: 20
+  action_dim: 18
+  state_history_length: 1
+  action_length: 30
+  field_bounds: [[-1.5, -1.5, -0.1], [1.5, 1.5, 0.8]]
+  depth_dropout: 0.25
+  future_coefficient: 0.2
+  field_coefficient_start: 0.1
+  field_coefficient_end: 0.02
+  communication_gate_init: 0.05
+  freq_coefficient: 1.0
+  freq_excluded_dims: [14, 15, 16]
+  ffn_gradient_checkpointing: true
+  async_train: true
+initialization:
+  checkpoint: ${WORLDDREAMER_V5_MODEL_CHECKPOINT}
+  checkpoint_format: worlddreamer-v5
+data:
+  action_dim: 18
+  state_dim: 20
+  normalization_dataset: RoboFactory
+  manifest_path: ${WORLDDREAMER_V5_DATA}/manifest.json
+  normalize_path: ${WORLDDREAMER_V5_DATA}/normalize.json
+  video_cache_manifest: ${WORLDDREAMER_V5_VIDEO_CACHE}/manifest.json
+  action_target: commanded_tcp_pose_and_gripper_drive_v3
+  action_length: 30
+  max_agents: 4
+  batch_size: 1
+  num_workers: 2
+  tasks: [PlaceFood, CameraAlignment, TakePhoto]
+  samples_per_task: 4200
+  seed: 42
+  video_observed_latents: 3
+  video_future_latents: 2
+  video_temporal_compression: 4
+  data_path_mapping: {}
+optimizer:
+  type: deepspeed.ops.adam.FusedAdam
+  params: {lr: 1.0, betas: [0.9, 0.95], eps: 1.0e-8, weight_decay: 0.1}
+scheduler:
+  num_training_steps: 2364
+  num_warmup_steps: 150
+  max_lr: 5.0e-6
+  min_lr: 1.0e-6
+  warmup_lr_start: 2.5e-7
+trainer:
+  default_root_dir: ${WORLDDREAMER_V5_RUN}
+  accelerator: gpu
+  devices: 4
+  num_nodes: 1
+  precision: bf16-mixed
+  accumulate_grad_batches: 4
+  max_epochs: 3
+  max_steps: -1
+  gradient_clip_val: 1.0
+  gradient_clip_algorithm: norm
+  log_every_n_steps: 1
+  num_sanity_val_steps: 0
+  use_distributed_sampler: false
+  strategy:
+    stage: 2
+    contiguous_gradients: true
+    overlap_comm: true
+    reduce_bucket_size: 200000000
+    allgather_bucket_size: 200000000
+guard:
+  min_free_gb: 80
+  checkpoint_write_gb: 95
+  expected_steps: 2364
+seed: 42
